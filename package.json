@@ -1,6 +1,6 @@
 {
   "name": "ora-to-image",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "main": "./app.js",
   "author": "Simon A. Eugster <simon.eu@gmail.com>",
   "homepage": "https://github.com/Granjow/ora-to-image",
