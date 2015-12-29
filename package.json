@@ -1,11 +1,20 @@
 {
-  "name": "Whiteboard",
-  "version": "0.0.1",
+  "name": "ora-to-image",
+  "version": "0.0.2",
+  "main": "./app.js",
+  "author": "Simon A. Eugster <simon.eu@gmail.com>",
+  "homepage": "https://github.com/Granjow/ora-to-image",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Granjow/ora-to-image.git"
+  },
   "devDependencies": {
     "lwip": "0.0.8"
   },
   "dependencies": {
+    "q": "^1.4.1",
     "unzip": "^0.1.11",
     "xml2js": "^0.4.15"
-  }
+  },
+  "license": "MIT"
 }
