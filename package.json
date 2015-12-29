@@ -1,4 +1,11 @@
 {
   "name": "Whiteboard",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "devDependencies": {
+    "lwip": "0.0.8"
+  },
+  "dependencies": {
+    "unzip": "^0.1.11",
+    "xml2js": "^0.4.15"
+  }
 }
