@@ -2,23 +2,62 @@ var fs = require( 'fs' ),
     os = require( 'os' ),
     path = require( 'path' ),
     util = require( 'util' ),
+    crypto = require( 'crypto' ),
     unzip = require( 'unzip' ),
     fsextra = require( 'fs-extra' ),
     lwip = require( 'lwip' ),
     Q = require( 'q' );
 
+var createTempPath = function () {
+    var rand = Math.random(),
+        prefix = 'whiteboard_',
+        now = (new Date().getTime()),
+        sha1 = crypto.createHash( 'sha1' );
+
+    sha1.update( rand + prefix + now );
+    return prefix + sha1.digest( 'hex' );
+};
+
 function mergedOra( oraPath ) {
 
     var deferred = Q.defer(),
-        tempDir = path.join( os.tmpdir(), 'whiteboard_' + (new Date().getTime()) );
-
-    fs.mkdirSync( tempDir );
+        zipReader,
+        tempDir = path.join( os.tmpdir(), createTempPath() );
 
     // ORA is a zip. Extract it and read the content description in stack.xml.
-    fs.createReadStream( oraPath ).pipe( unzip.Extract( { path: tempDir } ) ).on( 'close', function () {
+    try {
+        fs.mkdirSync( tempDir );
+
+        // Read the ORA file ...
+        var oraReader = fs.createReadStream( oraPath );
+        oraReader.on( 'error', function ( e ) {
+            deferred.reject( e.message );
+        } );
+
+        // ... and pipe it to the unzipper.
+        zipReader = oraReader.pipe( unzip.Extract( { path: tempDir } ) );
+        zipReader.on( 'error', function ( e ) {
+            deferred.reject( e.message );
+        } );
+
+    } catch ( err ) {
+        deferred.reject( 'Could not extract ORA file' );
+        return deferred.promise;
+    }
+
+    // When the ORA has been extracted, process the contents.
+    zipReader.on( 'close', function () {
 
         // stack.xml contains a list of layers. Stack them.
-        require( 'xml2js' ).parseString( fs.readFileSync( path.join( tempDir, 'stack.xml' ) ), function ( err, stack ) {
+        var stackData;
+        try {
+            stackData = fs.readFileSync( path.join( tempDir, 'stack.xml' ) )
+        } catch ( err ) {
+            deferred.reject( err.message );
+            return;
+        }
+
+        require( 'xml2js' ).parseString( stackData, function ( err, stack ) {
 
             var layer = function ( data ) {
                 return path.join( tempDir, data.src );
