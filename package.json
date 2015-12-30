@@ -8,11 +8,9 @@
     "type": "git",
     "url": "https://github.com/Granjow/ora-to-image.git"
   },
-  "devDependencies": {
-    "lwip": "0.0.8"
-  },
   "dependencies": {
     "fs-extra": "^0.26.3",
+    "lwip": "0.0.8",
     "q": "^1.4.1",
     "unzip": "^0.1.11",
     "xml2js": "^0.4.15"
