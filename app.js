@@ -36,9 +36,6 @@ function mergedOra( oraPath ) {
             } );
             layerData.reverse();
 
-            console.log( util.inspect( layerData, { depth: null, colors: true } ) );
-
-
             if ( layerData.length == 0 ) {
                 deferred.reject( 'No layers found.' );
             } else {
@@ -57,10 +54,12 @@ function mergedOra( oraPath ) {
                         // pastes it on top of the background image.
                         layerData.forEach( ( data, ix ) => {
                             if ( ix > 0 ) {
-                                console.log( 'Creating job for ' + data.src );
                                 jobs.push( () => {
                                     var deferred = Q.defer();
-                                    console.log( 'Processing:', util.inspect( data, { depth: null, colors: true } ) );
+                                    console.log( 'Processing ' + oraPath + ':', util.inspect( data, {
+                                        depth: null,
+                                        colors: true
+                                    } ) );
                                     lwip.open( layer( data ), function ( err, layer ) {
                                         if ( !err ) {
                                             backgroundBatch.paste( data.x, data.y, layer );
@@ -122,5 +121,8 @@ module.exports = {
             ( batchImage ) => batchImage.writeFile( pngPath, callback ),
             ( reason ) => callback( reason )
         );
+    },
+    samples: {
+        screen: path.join( __dirname, 'resources', 'oraScreen.ora' )
     }
 };

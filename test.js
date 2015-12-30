@@ -1,6 +1,7 @@
-var path = require( 'path' );
+var path = require( 'path' ),
+    oti = require( './app.js' );
 
-require( './app.js' ).mergeOra( 'test/test.ora', function ( err, img ) {
+oti.mergeOra( oti.samples.screen, function ( err, img ) {
     console.log( 'Okay, writing file.', path.join( __dirname, 'merged.jpg' ) );
     console.log( err, img );
     img.writeFile( path.join( __dirname, 'merged.jpg' ), function ( err ) {
@@ -8,6 +9,6 @@ require( './app.js' ).mergeOra( 'test/test.ora', function ( err, img ) {
     } );
 } );
 
-require( './app.js' ).oraToImage( 'test/test.ora', 'merged.png', function ( err ) {
+oti.oraToImage( oti.samples.screen, 'merged.png', function ( err ) {
     console.log( 'Success: ', !err );
 } );

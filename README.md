@@ -1,3 +1,6 @@
+
+![ORA screen](resources/screen.jpg)
+
 ### ORA?
 
 Converts ORA ([OpenRaster](https://en.wikipedia.org/wiki/OpenRaster)) files, which consist of multiple layers, 
@@ -20,3 +23,7 @@ which can be used to further process the image.)
     require( 'ora-to-image' ).mergeOra( 'test.ora', function ( err, img ) {
         img.writeFile( 'merged.jpg' );
     } );
+
+The path to the above demo image is
+    
+    require( 'ora-to-image' ).samples.screen
