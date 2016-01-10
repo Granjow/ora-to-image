@@ -1,10 +1,11 @@
+Converts OpenRaster `.ora` files to PNG, JPG, or GIF.
 
 ![ORA screen](resources/screen.jpg)
 
 ### ORA?
 
-Converts ORA ([OpenRaster](https://en.wikipedia.org/wiki/OpenRaster)) files, which consist of multiple layers, 
-to a single-layer image. It can then be saved as PNG, JPG, or GIF.
+[OpenRaster](https://en.wikipedia.org/wiki/OpenRaster) files consist of multiple layers, 
+like .psd or .xcf files. ORA is an open file format.
 
 ORA is used by [MyPaint](http://mypaint.org/), [Krita](https://krita.org/), and others.
 
@@ -24,6 +25,13 @@ which can be used to further process the image.)
         img.writeFile( 'merged.jpg' );
     } );
 
-The path to the above demo image is
-    
-    require( 'ora-to-image' ).samples.screen
+### Demo
+
+An example ORA file is available in the package as `require( 'ora-to-image' ).samples.screen`,
+so you can run the following command in order to generate the drawing on top:
+
+    var oti = require( 'ora-to-image' );
+    oti.mergeOra( oti.samples.screen, function ( err, img ) {
+        img.writeFile( 'oraScreen.jpg' );
+    } );
+
