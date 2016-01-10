@@ -8,6 +8,8 @@ var fs = require( 'fs' ),
     lwip = require( 'lwip' ),
     Q = require( 'q' );
 
+var debug = false;
+
 var createTempPath = function () {
     var rand = Math.random(),
         prefix = 'whiteboard_',
@@ -95,7 +97,7 @@ function mergedOra( oraPath ) {
                             if ( ix > 0 ) {
                                 jobs.push( () => {
                                     var deferred = Q.defer();
-                                    console.log( 'Processing ' + oraPath + ':', util.inspect( data, {
+                                    debug && console.log( 'Processing ' + oraPath + ':', util.inspect( data, {
                                         depth: null,
                                         colors: true
                                     } ) );
@@ -141,7 +143,7 @@ module.exports = {
     /**
      * Create a lwip batch object (see https://github.com/EyalAr/lwip#batch-operations) of the merged layers.
      * @param {string} oraPath Path to the ORA file
-     * @param {function(err:string, image:Object)} callback
+     * @param {function(err:string|null, image:Object|null)} callback
      */
     mergeOra: function ( oraPath, callback ) {
         mergedOra( oraPath ).then(
@@ -163,5 +165,11 @@ module.exports = {
     },
     samples: {
         screen: path.join( __dirname, 'resources', 'oraScreen.ora' )
+    },
+    /**
+     * @param {boolean} enableDebug Set to something > 0 to enable debug messages.
+     */
+    set debug( enableDebug ) {
+        debug = enableDebug;
     }
 };

@@ -1,6 +1,8 @@
 var path = require( 'path' ),
     oti = require( './app.js' );
 
+oti.debug = true;
+
 oti.mergeOra( oti.samples.screen, function ( err, img ) {
     console.log( 'Okay, writing file.', path.join( __dirname, 'merged.jpg' ) );
     console.log( err, img );

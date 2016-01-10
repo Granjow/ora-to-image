@@ -2,22 +2,30 @@ Converts OpenRaster `.ora` files to PNG, JPG, or GIF.
 
 ![ORA screen](resources/screen.jpg)
 
-### ORA?
+## ORA?
 
 [OpenRaster](https://en.wikipedia.org/wiki/OpenRaster) files consist of multiple layers, 
 like .psd or .xcf files. ORA is an open file format.
 
 ORA is used by [MyPaint](http://mypaint.org/), [Krita](https://krita.org/), and others.
 
-### Usage
+## API
 
-Direct conversion from ORA to PNG:
+### .oraToImage( oraPath, pngPath, callback )
+
+Callback is a `function( err: Object|null )`; `err` is `null` if no error occurred.
+
+*Usage:* Direct conversion from ORA to PNG
 
     require( 'ora-to-image' ).oraToImage( 'test.ora', 'merged.png', function ( err ) {
         console.log( 'Success: ', !err );
     } );
 
-Manual processing of the returned image: (The callback function will receive a 
+### .mergeOra( oraPath, callback )
+
+Callback is a `function( err: Object|null, img: lwipImage|null )`
+
+*Usage:* Manual processing of the returned image (The callback function will receive a 
 [Batch Image](https://github.com/EyalAr/lwip#batch-operations) from lwip, 
 which can be used to further process the image.)
 
@@ -25,7 +33,15 @@ which can be used to further process the image.)
         img.writeFile( 'merged.jpg' );
     } );
 
-### Demo
+### .debug
+
+Set it to `true` to enable debug log messages.
+
+*Usage:*
+
+    require( 'ora-to-image' ).debug = true
+
+## Demo
 
 An example ORA file is available in the package as `require( 'ora-to-image' ).samples.screen`,
 so you can run the following command in order to generate the drawing on top:
