@@ -3,7 +3,7 @@ var path = require( 'path' ),
 
 oti.debug = true;
 
-oti.mergeOra( oti.samples.screen, function ( err, img ) {
+oti.mergeOra( oti.samples.screen, ( err, img ) => {
     console.log( 'Okay, writing file.', path.join( __dirname, 'merged.jpg' ) );
     console.log( err, img );
     img.writeFile( path.join( __dirname, 'merged.jpg' ), function ( err ) {
@@ -11,6 +11,6 @@ oti.mergeOra( oti.samples.screen, function ( err, img ) {
     } );
 } );
 
-oti.oraToImage( oti.samples.screen, 'merged.png', function ( err ) {
+oti.oraToImage( oti.samples.screen, 'merged.png', err => {
     console.log( 'Success: ', !err );
 } );
